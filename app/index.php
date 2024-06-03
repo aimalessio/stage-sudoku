@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="sudoku.css">
     <title>Sudoku Solver</title>
     <style>
         body {
-                background-image: url('./images/sudoku.jpg');
+                background-image: url('./homepage/images/sudoku.jpg');
                 font-family: Arial, sans-serif;
                 display: flex;
                 justify-content: center;
@@ -19,6 +20,7 @@
             }
         .title {
             font-size: 2em;
+            margin-top: 60px; /* Add space between header and title */
             margin-bottom: 20px;
             color: white;
         }
@@ -71,10 +73,64 @@
             font-size: 18px;
             color: #333;
         }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-image: linear-gradient(to top, transparent 1%, black);
+            z-index: 9999;
+            padding: 5px 0;
+            transition: transform 0.3s; /* Add smooth transition effect */
+            display: flex;
+            justify-content: flex-end; /* Align buttons to the right */
+            padding-right: 20px; /* Add some padding to the right */
+        }
+
+        .button-style5 {
+            font-size: 30px;
+            padding: 20px 20px;
+            text-shadow: 0 0 10px #009ac1; /* Adjust the shadow properties as needed */
+            color:  #daf6ff;;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            text-align: center;
+        }
+
+        .button-style5:hover {
+            transform: scale(1.3);
+        }
+
+        .button-container a {
+            text-decoration: none;
+            margin: 0 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .button-container a::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            visibility: hidden;
+            transform: scaleX(0);
+            transition: all 0.4s ease-in-out;
+        }
+
+        .button-container a:hover::after {
+            visibility: visible;
+            transform: scaleX(1);
+        }
     </style>
 </head>
+<header>
+        <div class="button-container">
+            <a href="http://localhost/spel-regels/spelregels.php" class="button-style5">spel regels</a>
+        </div>
+</header>
 <body>
-
     <div class="title">Sudoku Solver</div>
     <div class="grid" id="sudoku-grid">
         <!-- JavaScript will populate this -->
@@ -97,7 +153,7 @@
                 input.id = `cell-${i}`;
                 input.addEventListener('input', function(event) {
                     const inputValue = event.target.value;
-                    if (!/^\d*$/.test(inputValue)) {
+                    if (!/^\d*$/.est(inputValue)) {
                         event.target.value = '';
                     }
                 });
