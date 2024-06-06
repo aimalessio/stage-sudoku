@@ -3,26 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="sudoku.css">
+    <link rel="stylesheet" href="sudoku.css">
     <title>Sudoku Solver</title>
     <style>
         body {
-                background-image: url('./homepage/images/sudoku.jpg');
-                font-family: Arial, sans-serif;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-direction: column;
-                height: 100vh;
-                background-color: #f0f0f0; /* fallback color */
-                background-size: cover;
-                margin: 0;
-            }
+            background-image: url('./homepage/images/sudoku.jpg');
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f0f0f0; /* fallback color */
+            background-size: cover;
+            margin: 0;
+        }
         .title {
             font-size: 2em;
             margin-top: 60px; /* Add space between header and title */
             margin-bottom: 20px;
             color: white;
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; /* Black outline */
         }
         .grid {
             display: grid;
@@ -31,6 +32,7 @@
             gap: 2px;
             border: 3px solid #333;
             background-color: #fff;
+            box-shadow: 0 0 20px rgba(255, 255, 255);
         }
         .cell {
             width: 40px;
@@ -55,6 +57,9 @@
         }
         .button-container {
             margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
         }
         button {
             padding: 10px 20px;
@@ -64,9 +69,11 @@
             color: white;
             border: none;
             border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
         button:hover {
-            background-color: #0056b3;
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
         #result {
             margin-top: 10px;
@@ -86,27 +93,23 @@
             justify-content: flex-end; /* Align buttons to the right */
             padding-right: 20px; /* Add some padding to the right */
         }
-
         .button-style5 {
             font-size: 30px;
             padding: 20px 20px;
             text-shadow: 0 0 10px #009ac1; /* Adjust the shadow properties as needed */
-            color:  #daf6ff;;
+            color: #daf6ff;
             transition: background-color 0.3s ease, transform 0.3s ease;
             text-align: center;
         }
-
         .button-style5:hover {
             transform: scale(1.3);
         }
-
         .button-container a {
             text-decoration: none;
             margin: 0 10px;
             position: relative;
             display: inline-block;
         }
-
         .button-container a::after {
             content: "";
             position: absolute;
@@ -118,17 +121,38 @@
             transform: scaleX(0);
             transition: all 0.4s ease-in-out;
         }
-
         .button-container a:hover::after {
             visibility: visible;
             transform: scaleX(1);
         }
+        .button-container a:hover::after {
+            visibility: visible;
+            transform: scaleX(1);
+        }
+        .dropdown-container {
+            position: absolute;
+            top: -50px; /* Adjust to position above the grid */
+            right: 0;
+        }
+        select {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+        select:focus {
+            outline: none;
+            border-color: #007BFF;
+        }
     </style>
 </head>
 <header>
-        <div class="button-container">
-            <a href="http://localhost/spel-regels/spelregels.php" class="button-style5">spel regels</a>
-        </div>
+    <div class="button-container">
+        <a href="http://localhost/spel-regels/spelregels.php" class="button-style5">spel regels</a>
+    </div>
 </header>
 <body>
     <div class="title">Sudoku Solver</div>
@@ -136,6 +160,11 @@
         <!-- JavaScript will populate this -->
     </div>
     <div class="button-container">
+        <select id="difficulty" name="niveau">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
         <button onclick="solveSudoku()">Solve Sudoku</button>
         <button onclick="resetSudoku()">Reset</button>
         <p id="result"></p>
@@ -153,13 +182,14 @@
                 input.id = `cell-${i}`;
                 input.addEventListener('input', function(event) {
                     const inputValue = event.target.value;
-                    if (!/^\d*$/.est(inputValue)) {
+                    if (!/^\d*$/.test(inputValue)) {
                         event.target.value = '';
                     }
                 });
                 gridContainer.appendChild(input);
             }
         });
+
         // Solve the Sudoku puzzle
         function solveSudoku() {
             const grid = getGrid();

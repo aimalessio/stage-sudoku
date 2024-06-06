@@ -12,17 +12,18 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            height: 100vh;
             background-color: #f0f0f0; /* fallback color */
             background-size: cover;
             margin: 0;
-            padding-top: 70px; /* Add padding to prevent overlap with fixed header */
+            padding-top: 100px; /* Increase padding to prevent overlap with fixed header */
+            padding-bottom: 20px; /* Add some padding at the bottom */
         }
         .title {
             font-size: 2em;
             margin-top: 20px; /* Adjust space between header and title */
             margin-bottom: 20px;
             color: white;
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; /* Black outline */
         }
         .content {
             background-color: rgba(255, 255, 255, 0.79);
@@ -30,6 +31,7 @@
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Add black box-shadow */
             padding: 20px;
+            margin: 20px; /* Add margin to ensure border is visible */
             width: 80%;
             max-width: 800px;
             color: #333;
@@ -52,6 +54,12 @@
             list-style: disc inside;
             margin: 15px 0;
             padding-left: 20px;
+        }
+        .text-content ul li {
+            font-weight: bold; /* Make list items bold */
+            font-size: 1.1em; /* Increase font size */
+            line-height: 1.8; /* Increase line height */
+            margin-bottom: 10px; /* Add space between list items */
         }
         .image-content {
             flex-shrink: 0; /* Prevent the image from shrinking */
@@ -152,7 +160,6 @@
             <h3>Tips voor beginners:</h3>
             <ul>
                 <li>Begin met de rijen, kolommen of vakken die bijna volledig zijn ingevuld. Dit maakt het gemakkelijker om te bepalen waar de ontbrekende cijfers moeten komen.</li>
-                <li>Gebruik een potlood en gum bij het invullen van het rooster, zodat je fouten kunt corrigeren.</li>
                 <li>Zoek naar patronen en gebruik logica in plaats van te gokken waar cijfers moeten komen.</li>
             </ul>
             <p>Veel plezier met het oplossen van Sudoku-puzzels!</p>
